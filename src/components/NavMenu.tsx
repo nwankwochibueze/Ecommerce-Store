@@ -19,7 +19,7 @@ const NavMenu: React.FC = () => {
   const handleLinkClick = () => setNav(false);
 
   return (
-    <nav className="bg-green-200 fixed top-0 left-0 w-full z-50 h-18 px-6 flex items-center">
+    <nav className="bg-red-200 fixed top-0 left-0 w-full z-50 h-18 px-6 flex items-center">
       {/* Left: Nav Links */}
       <div className="hidden md:flex flex-1">
         <ul className="flex space-x-6">
