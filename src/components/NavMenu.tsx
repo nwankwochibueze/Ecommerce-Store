@@ -19,7 +19,7 @@ const NavMenu: React.FC = () => {
   const handleLinkClick = () => setNav(false);
 
   return (
-    <nav className="bg-red-200 fixed top-0 left-0 w-full z-50 h-18 px-6 flex items-center">
+    <nav className="bg-red-50 fixed top-0 left-0 w-full z-50 h-18 px-6 flex items-center">
       {/* Left: Nav Links */}
       <div className="hidden md:flex flex-1">
         <ul className="flex space-x-6">
@@ -40,7 +40,7 @@ const NavMenu: React.FC = () => {
 
       {/* Center: Logo */}
       <div className="flex-shrink-0 flex justify-center flex-1">
-        <h1 className="text-2xl font-bold cursor-pointer">LE PARLE`</h1>
+        <h1 className="text-2xl font-bold cursor-pointer">LeParle`</h1>
       </div>
 
       {/* Right: Icons (always visible) */}
