@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { GoHeartFill } from "react-icons/go";
 import { BsBagCheck } from "react-icons/bs";
+import { RiSearchLine } from "react-icons/ri";
+import { MdPerson2 } from "react-icons/md";
 // import MonifyLogo from "../assets/MonifyLogo.svg";
 
 const navLinks = [
@@ -19,7 +20,7 @@ const NavMenu: React.FC = () => {
   const handleLinkClick = () => setNav(false);
 
   return (
-    <nav className="bg-red-50 fixed top-0 left-0 w-full z-50 h-18 px-6 flex items-center">
+    <nav className="bg-red-50 w-full h-18 px-6 flex items-center sticky top-0 z-40">
       {/* Left: Nav Links */}
       <div className="hidden md:flex flex-1">
         <ul className="flex space-x-6">
@@ -44,12 +45,14 @@ const NavMenu: React.FC = () => {
       </div>
 
       {/* Right: Icons (always visible) */}
-      <div className="flex-1 flex justify-end items-center space-x-4">
-        <GoHeartFill className="text-2xl cursor-pointer" />
-        <BsBagCheck className="text-2xl cursor-pointer" />
+      <div className="flex-1 flex justify-end items-baseline space-x-3">
+        <RiSearchLine className="text-xl cursor-pointer" />
+        <MdPerson2 className="text-xl cursor-pointer" />
+        <BsBagCheck className="text-xl cursor-pointer" />
+
         {/* Mobile Menu Icon (navbar, only when menu is closed) */}
         <div className="md:hidden ml-4" onClick={handleNav}>
-          {!nav && <AiOutlineMenu size={25} />}
+          {!nav && <AiOutlineMenu size={20} />}
         </div>
       </div>
 
