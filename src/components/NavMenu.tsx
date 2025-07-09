@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { BsBagCheck } from "react-icons/bs";
+import { BsBag } from "react-icons/bs";
 import { RiSearchLine } from "react-icons/ri";
 import { MdPerson2 } from "react-icons/md";
-// import MonifyLogo from "../assets/MonifyLogo.svg";
+
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
 
 const navLinks = [
   { path: "/shop", name: "Shop" },
@@ -15,6 +17,13 @@ const navLinks = [
 
 const NavMenu: React.FC = () => {
   const [nav, setNav] = useState(false);
+
+  const cartCount = useSelector((state: RootState) =>
+    state.cart.items.reduce(
+      (sum: number, item: { quantity: number }) => sum + item.quantity,
+      0
+    )
+  );
 
   const handleNav = () => setNav(!nav);
   const handleLinkClick = () => setNav(false);
@@ -46,9 +55,16 @@ const NavMenu: React.FC = () => {
 
       {/* Right: Icons (always visible) */}
       <div className="flex-1 flex justify-end items-baseline space-x-3">
-        <RiSearchLine className="text-xl cursor-pointer" />
-        <MdPerson2 className="text-xl cursor-pointer" />
-        <BsBagCheck className="text-xl cursor-pointer" />
+        <RiSearchLine className="text-2xl cursor-pointer" />
+        <MdPerson2 className="text-2xl cursor-pointer" />
+        <div className="relative flex items-center justify-center w-8 h-8">
+          <BsBag className="text-2xl pointer-events-none" />
+          {cartCount > 0 && (
+            <span className="absolute inset-0 m-auto flex items-center justify-center text-black font-bold text-xs leading-none pointer-events-none h-5 w-5 translate-y-[3px]">
+              {cartCount}
+            </span>
+          )}
+        </div>
 
         {/* Mobile Menu Icon (navbar, only when menu is closed) */}
         <div className="md:hidden ml-4" onClick={handleNav}>
