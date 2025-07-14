@@ -5,11 +5,13 @@ import type { Product } from "../features/products/Products";
 interface CartItem extends Product {
   quantity: number;
   selectedSize: string;
+  selectedColor: string;
 }
 
 interface AddToCartPayload extends Product {
   selectedSize: string;
   quantity: number;
+  selectedColor: string;
 }
 
 interface CartState {
