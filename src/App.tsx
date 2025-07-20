@@ -10,6 +10,7 @@ const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const PlxBag = lazy(() => import("./productsPage/PlxBag"));
 const AlxBag = lazy(() => import("./productsPage/AlxBag"));
 const SluBag = lazy(() => import("./productsPage/SluBag"));
+const VxmBag = lazy(() => import("./productsPage/VxmBag"));
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
       { path: "/products/plx-bag-1", element: <PlxBag /> },
       { path: "/products/alx-bag-1", element: <AlxBag /> },
       { path: "/products/slu-bag-1", element: <SluBag /> },
+      { path: "/products/vxm-bag-1", element: <VxmBag /> },
       { path: "/page404", element: <PageNotFound /> },
     ],
   },

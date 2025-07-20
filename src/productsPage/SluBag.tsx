@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import Plx2 from "../assets/PLX-02.webp";
+import Slu2 from "../assets/SLU-02.webp"; // Single image used
 import { addToCart } from "../store/CartSlice";
 import Accordion from "../components/Accordion";
 
 const product = {
-  _id: "plx-bag-1",
-  title: "PLX Bag",
-  code: "PLX-003",
+  _id: "slu-bag-1",
+  title: "SLU Bag",
+  code: "SLU-003",
   description:
     "A timeless piece crafted for elegance and durability, the Braided Leather Handbag from LeParle` blends artisanal texture with modern design. Perfect for both casual outings and upscale events",
   price: 120,
-  imageUrl: Plx2, // 👈 Single image used
+  imageUrl: Slu2,
   info: "Material: Genuine Leather. Size: 30x20x10cm. Color: Brown.",
   sizes: ["S", "M", "L", "XL"],
 };
 
-const PlxBag = () => {
+const SluBag = () => {
   const dispatch = useDispatch();
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
@@ -32,13 +32,14 @@ const PlxBag = () => {
 
   return (
     <div className="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-14">
-      {/* Left: Image and Description */}
+      {/* Left: Single Product Image and Description */}
       <div>
         <div className="mb-12">
           <img
             src={product.imageUrl}
             alt={product.title}
-            className="mx-auto w-full max-w-md h-auto object-cover"
+            srcSet={`${Slu2} 1x, ${Slu2} 2x`}
+            className="w-full max-w-md h-auto object-cover mx-auto"
             loading="lazy"
           />
         </div>
@@ -48,6 +49,7 @@ const PlxBag = () => {
 
       {/* Right: Add to Cart and Options */}
       <div className="flex flex-col justify-start items-start">
+        {/* Product Details */}
         <div className="mb-2">
           <span className="block text-lg font-regular">{product.title}</span>
           <span className="block text-sm text-gray-500">
@@ -119,7 +121,7 @@ const PlxBag = () => {
           </button>
         </div>
 
-        {/* Add to Cart */}
+        {/* Add to Cart & Buy Now */}
         <button
           onClick={handleAddToCart}
           className="border text-gray-600 px-6 py-3 mb-2 w-full max-w-[360px] hover:underline"
@@ -127,7 +129,6 @@ const PlxBag = () => {
           Add to Cart
         </button>
 
-        {/* Buy Now */}
         <button
           onClick={handleBuyNow}
           className="bg-gray-600 text-white px-6 py-3 hover:underline w-full max-w-[360px]"
@@ -153,4 +154,4 @@ const PlxBag = () => {
   );
 };
 
-export default PlxBag;
+export default SluBag;
