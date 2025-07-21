@@ -1,7 +1,27 @@
-import React from "react";
 import { FaLock } from "react-icons/fa";
 
-const CartModal = ({ product, onClose }) => {
+type Product = {
+  title: string
+  price: number
+  image?: {
+    asset: {
+      url?: string
+    }
+  }
+  slug?: string
+  quantity?: number
+  selectedSize?: string
+  selectedColor?: string
+}
+
+
+
+type CartModalProps = {
+  product: Product
+  onClose: () => void
+}
+
+const CartModal = ({ product, onClose }: CartModalProps) => {
   return (
     <div className="fixed top-0 right-0 w-full max-w-sm bg-white shadow-lg z-50 p-6 border">
       <button
@@ -15,7 +35,7 @@ const CartModal = ({ product, onClose }) => {
 
       <div className="flex gap-4 items-center">
         <img
-          src={product.imageUrl}
+          src={product.image?.asset?.url || ""}
           alt={product.title}
           className="w-20 h-20 object-cover"
         />

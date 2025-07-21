@@ -3,6 +3,9 @@ import { useDispatch } from "react-redux";
 import Alx2 from "../assets/ALX-02.webp";
 import { addToCart } from "../store/CartSlice";
 import Accordion from "../components/Accordion";
+import CartModal from "../components/CartModal";
+import type { CartProduct } from "../store/type";
+
 
 const product = {
   _id: "alx-bag-1",
@@ -19,20 +22,41 @@ const product = {
 
 const AlxBag = () => {
   const dispatch = useDispatch();
+
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
 
+  const [showModal, setShowModal] = useState(false);        
+  const [modalProduct, setModalProduct] = useState<CartProduct | null>(null);  
+
   const handleAddToCart = () => {
-    dispatch(addToCart({ ...product, selectedSize, quantity, selectedColor }));
+    if (!selectedSize || !selectedColor) {
+      alert("Please select size and color");
+      return;
+    }
+
+    const payload = {
+      ...product,
+      selectedSize,
+      quantity,
+      selectedColor,
+    };
+
+    dispatch(addToCart(payload));
+    setModalProduct(payload);
+    setShowModal(true);
   };
 
   const handleBuyNow = () => {
     alert("Proceeding to checkout...");
   };
 
+  // Optional: auto-close modal after 3 seconds
+  
+
   return (
-    <div className="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-14">
+    <div className="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-14 relative">
       {/* Left Side: Product Image & Details */}
       <div>
         <div className="flex flex-col gap-2 mb-12">
@@ -75,11 +99,6 @@ const AlxBag = () => {
                 <span className="absolute left-1/2 top-1/2 w-4 h-4 bg-[#8B5C2A] rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></span>
               )}
             </span>
-            <span
-              className={`ml-3 ${
-                selectedColor === "Brown" ? "text-brown-700 font-bold" : ""
-              }`}
-            />
           </label>
         </div>
 
@@ -150,6 +169,14 @@ const AlxBag = () => {
           within 14 days of delivery.
         </Accordion>
       </div>
+
+      {/* Cart Modal (conditionally rendered) */}
+      {showModal && modalProduct && (
+        <CartModal
+          product={modalProduct}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };
