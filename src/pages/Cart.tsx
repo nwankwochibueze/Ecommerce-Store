@@ -1,17 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
+import type { CartProduct } from "../store/type";
 import { MdOutlineRemoveShoppingCart } from "react-icons/md";
-import {
-  FaMinus,
-  FaPlus,
-  FaTrash,
-  FaShoppingBag,
-  FaLock,
-} from "react-icons/fa";
+import { FaMinus, FaPlus, FaTrash, FaLock } from "react-icons/fa";
 import PromoAndNotes from "../components/PromoAndNotes";
 
 const Cart: React.FC = () => {
-  const cartItems = useSelector((state: any) => state.cart.items);
+  const cartItems = useSelector((state: RootState) => state.cart.items);
 
   return (
     <div className="py-15 w-full lg:max-w-none px-4 lg:px-6">
@@ -24,14 +20,19 @@ const Cart: React.FC = () => {
             </div>
 
             {/* Cart Items */}
-            {cartItems.map((item: any, index: number) => (
+            {cartItems.map((item: CartProduct, index: number) => (
               <div key={index} className="border-b border-gray-200 pb-6 mb-6">
                 <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-6">
                   {/* 👕 Image + Info Block */}
                   <div className="flex flex-row gap-4 flex-1">
-                    <div className="w-24 h-32 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500 text-4xl flex-shrink-0">
-                      <FaShoppingBag />
+                    <div className="w-24 h-32 flex-shrink-0">
+                      <img
+                        src={item.imageUrl || "/placeholder.svg"}
+                        alt={item.title}
+                        className="w-full h-full object-cover rounded-lg"
+                      />
                     </div>
+
                     <div className="flex flex-col justify-between">
                       <h3 className="font-medium text-lg mb-1">{item.title}</h3>
                       <p className="text-gray-600 mb-1">
