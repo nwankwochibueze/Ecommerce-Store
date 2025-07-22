@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import Plx2 from "../assets/PLX-02.webp";
 import { addToCart } from "../store/CartSlice";
 import Accordion from "../components/Accordion";
+import CartModal from "../components/CartModal";
+import type { CartProduct } from "../store/type";
 
 const product = {
   _id: "plx-bag-1",
@@ -11,19 +13,38 @@ const product = {
   description:
     "A timeless piece crafted for elegance and durability, the Braided Leather Handbag from LeParle` blends artisanal texture with modern design. Perfect for both casual outings and upscale events",
   price: 120,
-  imageUrl: Plx2, // 👈 Single image used
-  info: "Material: Genuine Leather. Size: 30x20x10cm. Color: Brown.",
+  imageUrl: Plx2,
+  images: [Plx2],
+  info: "Material: Polyester. Size: 30x20x10cm. Color: Brown.",
   sizes: ["S", "M", "L", "XL"],
 };
 
-const PlxBag = () => {
+const AlxBag = () => {
   const dispatch = useDispatch();
+
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
 
+  const [showModal, setShowModal] = useState(false);
+  const [modalProduct, setModalProduct] = useState<CartProduct | null>(null);
+
   const handleAddToCart = () => {
-    dispatch(addToCart({ ...product, selectedSize, quantity, selectedColor }));
+    if (!selectedSize || !selectedColor) {
+      alert("Please select size and color");
+      return;
+    }
+
+    const payload = {
+      ...product,
+      selectedSize,
+      quantity,
+      selectedColor,
+    };
+
+    dispatch(addToCart(payload));
+    setModalProduct(payload);
+    setShowModal(true);
   };
 
   const handleBuyNow = () => {
@@ -31,14 +52,14 @@ const PlxBag = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-14">
-      {/* Left: Image and Description */}
+    <div className="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-14 relative">
+      {/* Left Side: Product Image & Details */}
       <div>
-        <div className="mb-12">
+        <div className="flex flex-col gap-2 mb-12">
           <img
             src={product.imageUrl}
             alt={product.title}
-            className="mx-auto w-full max-w-md h-auto object-cover"
+            className="w-full max-w-[280px] h-auto object-cover mx-auto"
             loading="lazy"
           />
         </div>
@@ -46,16 +67,14 @@ const PlxBag = () => {
         <div className="mb-4 text-gray-600">{product.info}</div>
       </div>
 
-      {/* Right: Add to Cart and Options */}
-      <div className="flex flex-col justify-start items-start">
+      {/* Right Side: Purchase Options */}
+      <div className="flex flex-col items-start">
         <div className="mb-2">
-          <span className="block text-lg font-regular">{product.title}</span>
-          <span className="block text-sm text-gray-500">
-            Code: {product.code}
-          </span>
+          <span className="text-lg font-regular">{product.title}</span>
+          {/* <span className="text-sm text-gray-500">Code: {product.code}</span> */}
         </div>
 
-        <span className="font-regular mb-4">${product.price}</span>
+        <span className="mb-4 font-regular">${product.price}</span>
 
         {/* Color Picker */}
         <label className="mb-2 font-regular block">
@@ -80,7 +99,7 @@ const PlxBag = () => {
         </div>
 
         {/* Size Selector */}
-        <label className="mb-2 font-regular" htmlFor="size-select">
+        <label htmlFor="size-select" className="mb-2 font-regular">
           Size*
         </label>
         <select
@@ -103,34 +122,32 @@ const PlxBag = () => {
         <label className="mb-2 font-regular">Quantity*</label>
         <div className="flex items-center mb-4 border">
           <button
+            type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
             className="px-3 py-1 text-lg"
-            type="button"
           >
             -
           </button>
           <span className="px-4 py-1">{quantity}</span>
           <button
+            type="button"
             onClick={() => setQuantity((q) => q + 1)}
             className="px-3 py-1 text-lg"
-            type="button"
           >
             +
           </button>
         </div>
 
-        {/* Add to Cart */}
+        {/* Buttons */}
         <button
           onClick={handleAddToCart}
           className="border text-gray-600 px-6 py-3 mb-2 w-full max-w-[360px] hover:underline"
         >
           Add to Cart
         </button>
-
-        {/* Buy Now */}
         <button
           onClick={handleBuyNow}
-          className="bg-gray-600 text-white px-6 py-3 hover:underline w-full max-w-[360px]"
+          className="bg-gray-600 text-white px-6 py-3 w-full max-w-[360px] hover:underline"
         >
           Buy Now
         </button>
@@ -142,15 +159,19 @@ const PlxBag = () => {
           streets or airport terminals, this bag keeps your essentials secure
           and your style elevated.
         </Accordion>
-
         <Accordion title="RETURN AND REFUND POLICY" showBorder={false}>
           We want you to be completely satisfied with your purchase. If for any
           reason you're not happy with your PLX Bag, you may request a refund
           within 14 days of delivery.
         </Accordion>
       </div>
+
+      {/* Cart Modal (conditionally rendered) */}
+      {showModal && modalProduct && (
+        <CartModal product={modalProduct} onClose={() => setShowModal(false)} />
+      )}
     </div>
   );
 };
 
-export default PlxBag;
+export default AlxBag;

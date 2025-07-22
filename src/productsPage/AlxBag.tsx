@@ -6,17 +6,16 @@ import Accordion from "../components/Accordion";
 import CartModal from "../components/CartModal";
 import type { CartProduct } from "../store/type";
 
-
 const product = {
   _id: "alx-bag-1",
   title: "ALX Bag",
   code: "ALX-003",
   description:
-    "A timeless piece crafted for elegance and durability, the Braided Leather Handbag from LeParle` blends artisanal texture with modern design. Perfect for both casual outings and upscale events",
+    "Soft and stylish, LeParle’s Crochet Shoulder Bag blends handcrafted charm with minimalist design—perfect for sunny strolls and casual outings",
   price: 120,
   imageUrl: Alx2,
   images: [Alx2],
-  info: "Material: Genuine Leather. Size: 30x20x10cm. Color: Brown.",
+  info: "Material: Cotton. Size: 20x10cm. Color: Black.",
   sizes: ["S", "M", "L", "XL"],
 };
 
@@ -27,8 +26,8 @@ const AlxBag = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedColor, setSelectedColor] = useState("");
 
-  const [showModal, setShowModal] = useState(false);        
-  const [modalProduct, setModalProduct] = useState<CartProduct | null>(null);  
+  const [showModal, setShowModal] = useState(false);
+  const [modalProduct, setModalProduct] = useState<CartProduct | null>(null);
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedColor) {
@@ -52,18 +51,15 @@ const AlxBag = () => {
     alert("Proceeding to checkout...");
   };
 
-  // Optional: auto-close modal after 3 seconds
-  
-
   return (
     <div className="max-w-5xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-14 relative">
       {/* Left Side: Product Image & Details */}
       <div>
         <div className="flex flex-col gap-2 mb-12">
           <img
-            src={Alx2}
-            alt="ALX Bag"
-            className="w-full max-w-md h-auto object-cover mx-auto"
+            src={product.imageUrl}
+            alt={product.title}
+            className="w-full max-w-[280px] h-auto object-cover mx-auto"
             loading="lazy"
           />
         </div>
@@ -75,7 +71,7 @@ const AlxBag = () => {
       <div className="flex flex-col items-start">
         <div className="mb-2">
           <span className="text-lg font-regular">{product.title}</span>
-          <span className="text-sm text-gray-500">Code: {product.code}</span>
+          {/* <span className="text-sm text-gray-500">Code: {product.code}</span> */}
         </div>
 
         <span className="mb-4 font-regular">${product.price}</span>
@@ -172,10 +168,7 @@ const AlxBag = () => {
 
       {/* Cart Modal (conditionally rendered) */}
       {showModal && modalProduct && (
-        <CartModal
-          product={modalProduct}
-          onClose={() => setShowModal(false)}
-        />
+        <CartModal product={modalProduct} onClose={() => setShowModal(false)} />
       )}
     </div>
   );
